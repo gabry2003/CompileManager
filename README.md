@@ -1,4 +1,4 @@
-# project_manager
+# Project Manager
 Insieme di script e file binari per creare e gestire progetti di Software in C e in C++ con Visual Studio Code su Linux
 
 ## ISTRUZIONI INSTALLAZIONE
