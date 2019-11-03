@@ -1,0 +1,129 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compila ed esegui",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "/usr/share/compile.sh",
+                "\"${fileDirname}\"",
+                "1"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Compila senza eseguire",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "/usr/share/compile.sh",
+                "\"${fileDirname}\"",
+                "0"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Esegui Linux 64 bit",
+            "type": "shell",
+            "command": "${fileDirname}/release/linux/64bit/./*",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Esegui Windows 64 bit",
+            "type": "shell",
+            "command": "wine ${fileDirname}/release/windows/64bit/*.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Esegui Linux 32 bit",
+            "type": "shell",
+            "command": "${fileDirname}/release/linux/32bit/./*",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Esegui Windows 32 bit",
+            "type": "shell",
+            "command": "wine ${fileDirname}/release/windows/32bit/*.exe",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Esegui python",
+            "command": "python",
+            "args": [
+                "${fileDirname}/${fileBasenameNoExtension}.py"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Nuovo progetto",
+            "command": "/usr/bin/./new_project",
+            "args": [
+                "\"${fileDirname}\""
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
