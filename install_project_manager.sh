@@ -7,7 +7,7 @@
 #Installo i software necessari alla compilazione e all'esecuzione dei progetti
 #Se sono gia' installati non installera' nulla
 echo "Creato da Gabriele Princiotta"
-echo "Installazione di Project Manager per Visual Studio Manager..."
+echo "Installazione di Project Manager per Visual Studio Code..."
 echo "Ho bisogno dei permessi di amministratore per installare tutti i programmi, dovrai inserire la tua password"
 echo "Installazione di build-essential (necessario a compilare per Linux) in corso..."
 if sudo apt install build-essential;then
