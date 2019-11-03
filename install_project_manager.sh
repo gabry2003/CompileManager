@@ -37,24 +37,6 @@ else    #Altrimenti
     echo "Installazione fallita!"   #Messaggio di errore
     exit    #Fermo lo script
 fi
-mkdir tmp_install_project_manager   #Creo la cartella temporanea
-cd tmp_install_project_manager  #Mi ci sposto dentro
-#Scarico gli script
-echo "Scarico gli script del project manager..."
-#Scarico compile.sh
-if wget http://gabrieleprinciotta.altervista.org/project_manager/compile.sh; then   #Se si puo' scaricare
-    echo "'compile.sh' scaricato con successo!"
-else    #ALtrimenti
-    echo "Impossibile scaricare 'compile.sh'!"   #Messaggio di errore
-    exit    #Fermo lo script
-fi
-#Scarico new_project.sh
-if wget http://gabrieleprinciotta.altervista.org/project_manager/new_project.sh; then   #Se si puo' scaricare
-    echo "'new_project.sh' scaricato con successo!"
-else    #ALtrimenti
-    echo "Impossibile scaricare 'new_project.sh'!"   #Messaggio di errore
-    exit    #Fermo lo script
-fi
 #Li copio nella cartelle /usr/share/
 #Copio compile.sh
 if sudo cp compile.sh /usr/share/compile.sh; then   #Se si puo' copiare
@@ -77,21 +59,6 @@ else
     echo "Impossibile cambiare i permessi di esecuzione!"   #Messaggio di errore
     exit    #Fermo lo script
 fi
-#Scarico il file tasks.json
-#Scarico tasks.json
-if wget http://gabrieleprinciotta.altervista.org/project_manager/tasks.json; then   #Se si puo' scaricare
-    echo "'tasks.json' scaricato con successo!"
-else    #ALtrimenti
-    echo "Impossibile scaricare 'tasks.json'!"   #Messaggio di errore
-    exit    #Fermo lo script
-fi
-#Scarico new_project con interfaccia grafica
-if wget http://gabrieleprinciotta.altervista.org/project_manager/new_project; then  #Se si puo' scaricare
-    echo "'new_project' scaricato con successo!"
-else    #Altrimenti
-    echo "Impossibile scaricare 'new_project'!"
-    exit    #Fermo lo script
-fi
 #Lo copio in /usr/bin/
 if sudo cp new_project /usr/bin/new_project && sudo chmod +x /usr/bin/new_project; then   #Se si puo' copiare
     echo "'new_project' copiato in /usr/bin/"
@@ -111,7 +78,3 @@ else    #Altrimenti
     echo "Installazione incompleta!"
     exit    #Fermo lo script
 fi
-#Esco dalla cartella
-cd ..
-#ELimino la cartella
-rm -r tmp_install_project_manager
