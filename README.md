@@ -5,7 +5,7 @@ Insieme di script e file binari per creare e gestire progetti di Software in C e
 ```console
 mkdir tmp
 cd tmp
-git clone https://github.com/gabry2003/new_project.git
+git clone https://github.com/gabry2003/project_manager.git
 cd new_project
 chmod +x install_project_manager.sh
 ./install_project_manager.sh
@@ -16,3 +16,6 @@ cd ..
 cd ..
 rm -r tmp
 ```
+### N.B.
+La cartella dello Workspace è la cartella che hai aperto VS Code dove lavori ai tuoi progetti.
+È necessaria per il funzionamento del file tasks.json
