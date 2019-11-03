@@ -6,7 +6,7 @@ Insieme di script e file binari per creare e gestire progetti di Software in C e
 mkdir tmp
 cd tmp
 git clone https://github.com/gabry2003/project_manager.git
-cd new_project
+cd project_manager
 chmod +x install_project_manager.sh
 ./install_project_manager.sh
 ```
