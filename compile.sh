@@ -102,7 +102,7 @@ compilazione_linux_64="0"
 compilazione_windows_32="0"
 #Se il progetto e' a riga di comando
 if [ "$tipo_grafica" == "console" ]; then
-    if [ "$distribuzione" == "1"] || [ "$distribuzione" == "2" ]; then  #Compilo per Linux solo se lo prevede il progetto
+    if [ "$distribuzione" == "1" ] || [ "$distribuzione" == "2" ]; then  #Compilo per Linux solo se lo prevede il progetto
         #Compilo per Linux, per C o per C++
         #Compilo per 64 bit solo se sono su 64 bit
         if [ "$architettura" == "x86_64" ]; then
