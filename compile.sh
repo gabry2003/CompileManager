@@ -164,19 +164,17 @@ if [ "$tipo_grafica" == "console" ]; then
     fi
 else    #Altrimenti
     #Al momento compila solo i progetti di QT Creator
-    #Uso QMake con il file del progetto
-    if ! qmake $cartella_progetto/*.pro; then   #Se non funziona il comando qmake
-        echo "Impossibile compilare il progetto con qmake!"
+    #Compilo il progetto
+    #Compilo per linux a 64bit
+    cd $cartella_progetto/release
+    make clean
+    if  cd .. && qmake -qt=qt5 -config release && make; then   #Se non compila il progetto
+        echo "Progetto compilato con successo!"
+    else
+        echo "Impossibile compilare il progetto!"
         exit    #Fermo lo script
     fi
-    #Uso Make
-    if ! make -j8 in $cartella_progetto/release/linux/64bit/; then #Se non funziona il comando make
-        echo "Impossibile eseguire il comando make!"
-        exit    #Fermo lo script
-    else    #Altrimenti
-        echo "Compilazione effettuata con successo!"
-    fi
-    make clean -j8 in $cartella_progetto/release/linux/64bit/
+    #make CC=my-custom-gcc CXX=my-custom-g++ LINK=my-custom-g++
 fi
 #Se ha scelto di eseguire il programma
 if [ "$eseguire" == "1" ]; then
