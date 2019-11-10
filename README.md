@@ -3,6 +3,7 @@ Insieme di script e file binari per creare e gestire progetti di Software in C e
 
 ## ISTRUZIONI INSTALLAZIONE
 ```console
+sudo apt-get install git
 mkdir tmp
 cd tmp
 git clone https://github.com/gabry2003/project_manager.git
