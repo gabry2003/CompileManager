@@ -15,12 +15,6 @@ Copia il file eseguibile e copialo nella cartella **/usr/bin/**
 chmod +x install_project_manager.sh
 ./install_project_manager.sh
 ```
-Se l'installazione va a buon fine:
-```console
-cd ..
-cd ..
-rm -r tmp
-```
 ### N.B.
-La cartella dello Workspace è la cartella che hai aperto VS Code dove lavori ai tuoi progetti.
+La cartella dello Workspace è la cartella che hai aperto VS Code dove lavori ai tuoi progetti.  
 È necessaria per il funzionamento del file tasks.json
