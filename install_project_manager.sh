@@ -62,13 +62,6 @@ else
     echo "Impossibile cambiare i permessi di esecuzione!"   #Messaggio di errore
     exit    #Fermo lo script
 fi
-#Lo copio in /usr/bin/
-if sudo cp new_project /usr/bin/new_project && sudo chmod +x /usr/bin/new_project; then   #Se si puo' copiare
-    echo "'new_project' copiato in /usr/bin/"
-else    #Altrimenti
-    echo "Impossibile copiare 'new_project' in /usr/bin/"
-    exit    #Fermo lo script
-fi
 #Chiedo all'utente la cartella dello Workspace
 echo "Inserisci la cartella dello Workspace (ad esempio "$HOME"/Software/):"
 read cartella_workspace #Prendo in input la cartella dello Workspace
