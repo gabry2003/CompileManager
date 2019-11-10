@@ -9,7 +9,7 @@ cd tmp
 git clone https://github.com/gabry2003/project_manager.git
 cd project_manager
 ```
-Compila il programma QT new_project nella cartella **$HOME/tmp/project_manager/new_project/**
+Compila il programma QT new_project nella cartella **$HOME/tmp/project_manager/new_project/**  
 Copia il file eseguibile e copialo nella cartella **/usr/bin/**
 ```console
 chmod +x install_project_manager.sh
