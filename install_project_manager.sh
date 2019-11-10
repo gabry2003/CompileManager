@@ -31,6 +31,9 @@ else    #Altrimenti
     exit    #Fermo lo script
 fi
 echo "Installazione di Wine (necessario ad eseguire i programmi compilati per Windows) in corso..."
+sudo dpkg --add-architecture i386
+wget -qO- https://dl.winehq.org/wine-builds/Release.key | sudo apt-key add -
+sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ artful main'
 if sudo aptitude install winehq-stable;then
     echo "Installazione di Wine effettuata con successo!"
 else    #Altrimenti
