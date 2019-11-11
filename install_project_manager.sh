@@ -34,10 +34,17 @@ echo "Installazione di Wine (necessario ad eseguire i programmi compilati per Wi
 sudo dpkg --add-architecture i386
 wget -qO- https://dl.winehq.org/wine-builds/Release.key | sudo apt-key add -
 sudo apt-add-repository 'deb http://dl.winehq.org/wine-builds/ubuntu/ artful main'
-if sudo aptitude install winehq-stable;then
+if sudo aptitude install winehq-stable; then
     echo "Installazione di Wine effettuata con successo!"
 else    #Altrimenti
     tput setaf 1; echo "Installazione fallita!"   #Messaggio di errore
+    exit    #Fermo lo script
+fi
+echo "Installazione di xTerm in corso..."
+if sudo apt install xterm; then
+    echo "Installazione di xTerm effettuata con successo!"
+else
+    tput setaf 1; echo "Installazione fallita!" #Messaggio di errore
     exit    #Fermo lo script
 fi
 #Li copio nella cartelle /usr/share/
