@@ -115,7 +115,7 @@
         {
             "type": "shell",
             "label": "Nuovo progetto",
-            "command": "/usr/bin/./new_project",
+            "command": "/usr/bin/./new_project.AppImage",
             "args": [
                 "\"${fileDirname}\""
             ],

@@ -94,6 +94,8 @@ for FILE in $cartella_progetto/*.$estensione_file; do
 done
 #Prendo il tipo di UI (grafica o console, per ora solo console)
 tipo_grafica=$(head -2 $cartella_progetto/info | tail -1)
+#Prendo il nome del progetto
+nome_progetto=$(head -5 $cartella_progetto/info | tail -1)
 #Cartella corrente, per il nome del file eseguibile
 current_dir=$(basename $cartella_progetto)
 compilazione_linux_64="0"
@@ -165,16 +167,51 @@ if [ "$tipo_grafica" == "console" ]; then
 else    #Altrimenti
     #Al momento compila solo i progetti di QT Creator
     #Compilo il progetto
-    #Compilo per linux a 64bit
-    cd $cartella_progetto/release
+    cd $cartella_progetto
     make clean
-    if  cd .. && qmake -qt=qt5 -config release && make; then   #Se non compila il progetto
-        echo "Progetto compilato con successo!"
-    else
-        echo "Impossibile compilare il progetto!"
-        exit    #Fermo lo script
+    if [ "$distribuzione" == "1" ] || [ "$distribuzione" == "2" ]; then  #Compilo per Linux solo se lo prevede il progetto
+        echo "Compilo per Linux..."
+        if qmake -qt=qt5 && make; then   #Se compila il progetto
+            if mv $nome_progetto release/linux/64bit/$nome_progetto; then
+                echo "Progetto compilato con successo. Disponibile su $cartella_progetto/release/linux/64bit/$nome_progetto"
+                compilazione_linux_64="1"
+            else
+                echo "Impossibile compilare il progetto!"
+            fi
+        else
+            echo "Impossibile compilare il progetto!"
+        fi
     fi
-    #make CC=my-custom-gcc CXX=my-custom-g++ LINK=my-custom-g++
+    if [ "$distribuzione" == "1" ] || [ "$distribuzione" == "3" ]; then #Compilo per Windows solo se lo prevede il progetto
+        echo ""
+        echo "Compilo per Windows a 64bit..."
+        #Compilo per Windows a 64 bit solo se sono su 64 bit
+        if [ "$architettura" == "x86_64" ]; then
+            if qmake -qt=qt5 && make CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ LINK=x86_64-w64-mingw32-g++; then   #Se compila il progetto
+                if mv "$nome_progetto" "release/windows/64bit/$nome_progetto.exe"; then
+                    echo "Progetto compilato con successo. Disponibile su $cartella_progetto/release/windows/64bit/$nome_progetto.exe"
+                    compilazione_windows_64="1"
+                else
+                    echo "Impossibile compilare il progetto!"
+                fi
+            else
+                echo "Impossibile compilare il progetto!"
+            fi
+        fi
+        echo "Compilo per Windows a 32bit..."
+        if qmake -qt=qt5 && make CC=i686-w64-mingw32-gcc CXX=i686-w64-mingw32-g++ LINK=i686-w64-mingw32-g++; then   #Se compila il progetto
+            if mv "$nome_progetto" "release/windows/32bit/$nome_progetto.exe"; then
+                echo "Progetto compilato con successo. Disponibile su $cartella_progetto/release/windows/32bit/$nome_progetto.exe"
+                compilazione_windows_32="1"
+            else
+                echo "Impossibile compilare il progetto!"
+            fi
+        else
+            echo "Impossibile compilare il progetto!"
+        fi
+
+    fi
+    make clean
 fi
 #Se ha scelto di eseguire il programma
 if [ "$eseguire" == "1" ]; then
