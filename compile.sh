@@ -5,8 +5,8 @@
 #date           :02-11-2019
 #version        :1.0
 #note           :Da abbinare a new_project.sh e new_project
-bold=$(tput bold)
-normal=$(tput sgr0)
+bold=$(tput bold)   #Testo in grassetto
+normal=$(tput sgr0) #Testo normale
 #Prendo la cartella del progetto
 cartella_progetto=$1
 #Prendo in input la scelta se eseguire o meno il programma dopo la compilazione
@@ -74,22 +74,20 @@ if [ "$distribuzione" == "1" ] || [ "$distribuzione" == "3" ]; then #Se rispetta
     fi
 fi
 if [ "$tipo_grafica" == "gui" ]; then   #Se e' un progetto ad interfaccia grafica
-    #Se non c'e' un icona nella cartella del progetto ne scarico una di default
     cd $cartella_progetto   #Mi sposto nella cartella del progetto
-    if ! test -f $nome_progetto.png; then   #Se non c'e' gia' l'icona
-        wget https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Application-default-icon.svg/240px-Application-default-icon.svg.png  #Scarico l'icona
-        mv 240px-Application-default-icon.svg.png $nome_progetto.png    #La rinomino
-    fi
     if ! test -f "$nome_progetto.desktop"; then    #Se non c'e' il file .desktop
-        touch "$nome_progetto.desktop"    #Creo il file
         echo "[Desktop Entry]" > "$nome_progetto.desktop" #Aggiungo la riga al file
         echo "Type=Application" >> "$nome_progetto.desktop" #Aggiungo la riga al file
         echo "Name=$nome_progetto" >> "$nome_progetto.desktop" #Aggiungo la riga al file
-        echo "Exec=$cartella_progetto/release/linux/64bit/$nome_progetto" >> "$nome_progetto.desktop" #Aggiungo la riga al file
-        echo "Icon=$cartella_progetto/$nome_progetto.png" >> "$nome_progetto.desktop" #Aggiungo la riga al file
+        if [ "$architettura" == "x86_64" ]; then    #Se il computer e' a 64 bit
+            echo "Exec=$cartella_progetto/release/linux/64bit/$nome_progetto" >> "$nome_progetto.desktop" #Aggiungo la riga al file
+        else    #Altrimenti
+            echo "Exec=$cartella_progetto/release/linux/32bit/$nome_progetto" >> "$nome_progetto.desktop" #Aggiungo la riga al file
+        fi
+        echo "Icon=$nome_progetto" >> "$nome_progetto.desktop" #Aggiungo la riga al file
         echo "Comment=$descrizione_progetto" >> "$nome_progetto.desktop" #Aggiungo la riga al file
-        echo "Terminal=false" >> "$nome_progetto.desktop" #Aggiungo la riga al file
-        echo "Categories=Office" >> "$nome_progetto.desktop"    #Aggiungo la riga al file
+        echo "Categories=Office;" >> "$nome_progetto.desktop" #Aggiungo la riga al file
+        echo "X-AppImage-Version=" >> "$nome_progetto.desktop" #Aggiungo la riga al file
     fi
 fi
 #Prendo il linguaggio utilizzato (C o C++)
@@ -205,9 +203,10 @@ else    #Altrimenti
     fi
     make clean
 fi
+echo "${normal}"
 #Se ha scelto di eseguire il programma
 if [ "$eseguire" == "1" ]; then
-    echo "${normal}----------------------------------"
+    echo "----------------------------------"
     echo "Esecuzione programma in corso..."
     echo ----------------------------------
     #Se sono su 64 bit

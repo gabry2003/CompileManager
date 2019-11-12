@@ -60,6 +60,49 @@
             }
         },
         {
+            "type": "shell",
+            "label": "Nuovo progetto",
+            "command": "/usr/bin/./new_project.AppImage",
+            "args": [
+                "\"${fileDirname}\""
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Crea AppImage",
+            "command": "bash",
+            "args": [
+                "/usr/share/create_app_image.sh",
+                "\"${fileDirname}\"",
+                "0"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Crea AppImage ed esegui",
+            "command": "bash",
+            "args": [
+                "/usr/share/create_app_image.sh",
+                "\"${fileDirname}\"",
+                "1"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Esegui Linux 64 bit",
             "type": "shell",
             "command": "${fileDirname}/release/linux/64bit/./*",
@@ -105,19 +148,6 @@
             "command": "python",
             "args": [
                 "${fileDirname}/${fileBasenameNoExtension}.py"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": []
-        },
-        {
-            "type": "shell",
-            "label": "Nuovo progetto",
-            "command": "/usr/bin/./new_project.AppImage",
-            "args": [
-                "\"${fileDirname}\""
             ],
             "group": {
                 "kind": "build",

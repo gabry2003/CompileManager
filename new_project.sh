@@ -17,7 +17,7 @@ descrizione_progetto=$7
 if test -f $cartella_progetto/info; then
     echo "Esiste gia' un progetto in questa cartella, vuoi modificarlo (s o n) ?:"
     read modificare    #Prendo in input la scelta se modificare o no il progetto
-    if [ modificare == "n" ] || [ modificare == "N" ]; then #Se ha scelto di non modificarlo
+    if [ "$modificare" == "n" ] || [ "$modificare" == "N" ]; then #Se ha scelto di non modificarlo
         #Fermo lo script
         exit
     fi
@@ -87,7 +87,7 @@ else    #Altrimenti
     echo "Scrivi \"0\" per chiudere il programma"
     read chiusura
     if [ $chiusura == "0" ]; then
-        killall new_project #Chiudo new_project con l'interfaccia grafica
+        killall AppRun #Chiudo new_project con l'interfaccia grafica
         killall xterm   #Chiudo il terminale
     fi
 fi
