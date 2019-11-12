@@ -95,7 +95,7 @@ tipo_progetto=$(head -1 $cartella_progetto/info | tail -1)
 #Se e' C++
 if [ "$tipo_progetto" == "c++" ]; then
     estensione_file=cpp
-    #Siccome io uso l'estensione .cpp per i file c++, ma si possono usare altre estensioni, le cambio tutte
+    #Siccome uso l'estensione .cpp per i file c++, ma si possono usare altre estensioni, le cambio tutte
     for file in $cartella_progetto/*.cc $cartella_progetto/*.cxx $cartella_progetto/*.c++; do
         #Se il file esiste
         if test -f $file; then
@@ -131,27 +131,67 @@ if [ "$tipo_grafica" == "console" ]; then
         if [ "$architettura" == "x86_64" ]; then
             echo "${normal}Compilo per Linux a 64 bit..."
             if [ "$tipo_progetto" == "c++" ]; then
-                if g++ -g $cartella_progetto/*.cpp -o $cartella_progetto/release/linux/64bit/$current_dir -fexceptions -Wall;then
-                    echo "${bold}Compilazione effettuata! File eseguibile su release/linux/64bit/"$current_dir
-                    compilazione_linux_64="1"
+                compilato="1"
+                for file in $cartella_progetto/*.cpp; do   #Per tutti i file C++
+                    #Li compilo uno ad uno
+                    if ! g++ -c $file -o ${file/%cpp/o}; then   #Se non compila
+                        compilato="0"
+                    fi
+                done
+                if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                    if g++ -g -O2 $cartella_progetto/*.o -o $cartella_progetto/release/linux/64bit/$current_dir -fexceptions -Wall;then
+                        echo "${bold}Compilazione effettuata! File eseguibile su release/linux/64bit/"$current_dir
+                        compilazione_linux_64="1"
+                    fi
+                    rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
             else
-                if gcc -g $cartella_progetto/*.c -o $cartella_progetto/release/linux/64bit/$current_dir -fexceptions -Wall;then
-                    echo "${bold}Compilazione effettuata! File eseguibile su release/linux/64bit/"$current_dir
-                    compilazione_linux_64="1"
+                compilato="1"
+                for file in $cartella_progetto/*.c; do   #Per tutti i file C
+                    #Li compilo uno ad uno
+                    if ! gcc -c $file -o ${file/%c/o}; then   #Se non compila
+                        compilato="0"
+                    fi
+                done
+                if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                    if gcc -g -O2 $cartella_progetto/*.o -o $cartella_progetto/release/linux/64bit/$current_dir -fexceptions -Wall;then
+                        echo "${bold}Compilazione effettuata! File eseguibile su release/linux/64bit/"$current_dir
+                        compilazione_linux_64="1"
+                    fi
+                    rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
             fi
         fi
-        echo "Compilo per Linux a 32 bit..."
+        echo "${normal}Compilo per Linux a 32 bit..."
         if [ "$tipo_progetto" == "c++" ]; then
-            if g++ -g -m32 $cartella_progetto/*.cpp -o $cartella_progetto/release/linux/32bit/$current_dir -fexceptions -Wall;then
-                echo "${bold}Compilazione effettuata! File eseguibile su release/linux/32bit/"$current_dir
-                compilazione_linux_32="1"
+            compilato="1"
+            for file in $cartella_progetto/*.cpp; do   #Per tutti i file C++
+                    #Li compilo uno ad uno
+                if ! g++ -m32 -c $file -o ${file/%cpp/o}; then   #Se non compila
+                    compilato="0"
+                fi
+            done
+            if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                if g++ -m32 -O2 -g $cartella_progetto/*.o -o $cartella_progetto/release/linux/32bit/$current_dir -fexceptions -Wall;then
+                    echo "${bold}Compilazione effettuata! File eseguibile su release/linux/32bit/"$current_dir
+                    compilazione_linux_32="1"
+                fi
+                rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
         else
-            if gcc -g -m32 $cartella_progetto/*.c -o $cartella_progetto/release/linux/32bit/$current_dir -fexceptions -Wall;then
-                echo "${bold}Compilazione effettuata! File eseguibile su release/linux/32bit/"$current_dir
-                compilazione_linux_32="1"
+            compilato="1"
+            for file in $cartella_progetto/*.c; do   #Per tutti i file C
+                #Li compilo uno ad uno
+                if ! gcc -m32 -c $file -o ${file/%cpp/o}; then   #Se non compila
+                    compilato="0"
+                fi
+            done
+            if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                if gcc -m32 -O2 -g $cartella_progetto/*.o -o $cartella_progetto/release/linux/32bit/$current_dir -fexceptions -Wall;then
+                    echo "${bold}Compilazione effettuata! File eseguibile su release/linux/32bit/"$current_dir
+                    compilazione_linux_32="1"
+                fi
+                rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
         fi
     fi
@@ -161,27 +201,67 @@ if [ "$tipo_grafica" == "console" ]; then
         if [ "$architettura" == "x86_64" ]; then
             echo "${normal}Compilo per Windows a 64 bit..."
             if [ "$tipo_progetto" == "c++" ]; then
-                if x86_64-w64-mingw32-g++ -g $cartella_progetto/*.cpp -o $cartella_progetto/release/windows/64bit/$current_dir.exe -static-libgcc -static-libstdc++;then
-                    echo "${bold}Compilazione effettuata! File eseguibile su release/windows/64bit/"$current_dir".exe"
-                    compilazione_windows_64="1"
+                compilato="1"
+                for file in $cartella_progetto/*.cpp; do   #Per tutti i file C++
+                    #Li compilo uno ad uno
+                    if ! x86_64-w64-mingw32-g++ -c $file -o ${file/%cpp/o}; then   #Se non compila
+                        compilato="0"
+                    fi
+                done
+                if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                    if x86_64-w64-mingw32-g++ -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/64bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
+                        echo "${bold}Compilazione effettuata! File eseguibile su release/windows/64bit/"$current_dir".exe"
+                        compilazione_windows_64="1"
+                    fi
+                    rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
             else
-                if x86_64-w64-mingw32-gcc -g $cartella_progetto/*.c -o $cartella_progetto/release/windows/64bit/$current_dir.exe -static-libgcc -static-libstdc++;then
-                    echo "${bold}Compilazione effettuata! File eseguibile su release/windows/64bit/"$current_dir".exe"
-                    compilazione_windows_64="1"
+                compilato="1"
+                for file in $cartella_progetto/*.c; do   #Per tutti i file C
+                    #Li compilo uno ad uno
+                    if ! x86_64-w64-mingw32-gcc -c $file -o ${file/%cpp/o}; then   #Se non compila
+                        compilato="0"
+                    fi
+                done
+                if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                    if x86_64-w64-mingw32-gcc -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/64bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
+                        echo "${bold}Compilazione effettuata! File eseguibile su release/windows/64bit/"$current_dir".exe"
+                        compilazione_windows_64="1"
+                    fi
+                    rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
             fi
         fi
         echo "${normal}Compilo per Windows a 32 bit..."
         if [ "$tipo_progetto" == "c++" ]; then
-            if i686-w64-mingw32-g++ -g $cartella_progetto/*.cpp -o $cartella_progetto/release/windows/32bit/$current_dir.exe -static-libgcc -static-libstdc++;then
-                echo "${bold}Compilazione effettuata! File eseguibile su release/windows/32bit/"$current_dir".exe"
-                compilazione_windows_32="1"
+            compilato="1"
+            for file in $cartella_progetto/*.cpp; do   #Per tutti i file C++
+                #Li compilo uno ad uno
+                if ! i686-w64-mingw32-g++ -c $file -o ${file/%cpp/o}; then   #Se non compila
+                    compilato="0"
+                fi
+            done
+            if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                if i686-w64-mingw32-g++ -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/32bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
+                    echo "${bold}Compilazione effettuata! File eseguibile su release/windows/32bit/"$current_dir".exe"
+                    compilazione_windows_32="1"
+                fi
+                rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
         else
-            if i686-w64-mingw32-gcc -g $cartella_progetto/*.c -o $cartella_progetto/release/windows/32bit/$current_dir.exe -static-libgcc -static-libstdc++;then
-                echo "${bold}Compilazione effettuata! File eseguibile su release/windows/32bit/"$current_dir".exe"
-                compilazione_windows_64="1"
+            compilato="1"
+            for file in $cartella_progetto/*.c; do   #Per tutti i file C
+                #Li compilo uno ad uno
+                if ! i686-w64-mingw32-gcc -c $file -o ${file/%cpp/o}; then   #Se non compila
+                    compilato="0"
+                fi
+            done
+            if [ "$compilato" == "1" ]; then    #Se ha compilato i file
+                if i686-w64-mingw32-gcc -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/32bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
+                    echo "${bold}Compilazione effettuata! File eseguibile su release/windows/32bit/"$current_dir".exe"
+                    compilazione_windows_32="1"
+                fi
+                rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
         fi
     fi
@@ -209,36 +289,71 @@ if [ "$eseguire" == "1" ]; then
     echo "----------------------------------"
     echo "Esecuzione programma in corso..."
     echo ----------------------------------
-    #Se sono su 64 bit
-    if [ "$architettura" == "x86_64" ]; then
-        #Se la compilazione ha avuto successo
-        if [ "$compilazione_linux_64" == "1" ]; then
-            if [ "$tipo_grafica" == "console" ]; then
-                clear
-            fi
-            #Se il programma non si puo' eseguire
-            if ! $cartella_progetto/release/linux/64bit/./*;then
-                echo -------------------------------
-                tput setaf 1; echo Impossibile aprire il programma
-                echo -------------------------------
+    if [ "$distribuzione" == "3" ]; then    #Se e' un progetto solo per Windows
+        #Se sono su 64 bit
+        if [ "$architettura" == "x86_64" ]; then
+            #Se la compilazione ha avuto successo
+            if [ "$compilazione_windows_64" == "1" ]; then
+                if [ "$tipo_grafica" == "console" ]; then
+                    clear
+                fi
+                #Se il programma non si puo' eseguire
+                if ! wine $cartella_progetto/release/windows/64bit/*.exe;then
+                    echo -------------------------------
+                    tput setaf 1; echo Impossibile aprire il programma
+                    echo -------------------------------
+                fi
+            else    #Altrimenti
+                tput setaf 1; echo "Non posso eseguire il programma perche' la compilazione non ha avuto successo!"
             fi
         else    #Altrimenti
-            tput setaf 1; echo "Non posso eseguire il programma perche' la compilazione non ha avuto successo!"
+            #Se la compilazione ha avuto successo
+            if [ "$compilazione_windows_32" == "1" ]; then
+                if [ "$tipo_grafica" == "console" ]; then
+                    clear
+                fi
+                #Se il programma si puo' eseguire
+                if ! wine $cartella_progetto/release/windows/32bit/*.exe;then
+                    echo -------------------------------
+                    tput setaf 1; echo Impossibile aprire il programma
+                    echo -------------------------------
+                fi
+            else    #Altrimenti
+                tput setaf 1; echo "Non posso eseguire il programma perche' la compilazione non ha avuto successo!"
+            fi
         fi
     else    #Altrimenti
-        #Se la compilazione ha avuto successo
-        if [ "$compilazione_linux_32" == "1" ]; then
-            if [ "$tipo_grafica" == "console" ]; then
-                clear
-            fi
-            #Se il programma si puo' eseguire
-            if ! $cartella_progetto/release/linux/32bit/./*;then
-                echo -------------------------------
-                tput setaf 1; echo Impossibile aprire il programma
-                echo -------------------------------
+        #Se sono su 64 bit
+        if [ "$architettura" == "x86_64" ]; then
+            #Se la compilazione ha avuto successo
+            if [ "$compilazione_linux_64" == "1" ]; then
+                if [ "$tipo_grafica" == "console" ]; then
+                    clear
+                fi
+                #Se il programma non si puo' eseguire
+                if ! $cartella_progetto/release/linux/64bit/./*;then
+                    echo -------------------------------
+                    tput setaf 1; echo Impossibile aprire il programma
+                    echo -------------------------------
+                fi
+            else    #Altrimenti
+                tput setaf 1; echo "Non posso eseguire il programma perche' la compilazione non ha avuto successo!"
             fi
         else    #Altrimenti
-            tput setaf 1; echo "Non posso eseguire il programma perche' la compilazione non ha avuto successo!"
+            #Se la compilazione ha avuto successo
+            if [ "$compilazione_linux_32" == "1" ]; then
+                if [ "$tipo_grafica" == "console" ]; then
+                    clear
+                fi
+                #Se il programma si puo' eseguire
+                if ! $cartella_progetto/release/linux/32bit/./*;then
+                    echo -------------------------------
+                    tput setaf 1; echo Impossibile aprire il programma
+                    echo -------------------------------
+                fi
+            else    #Altrimenti
+                tput setaf 1; echo "Non posso eseguire il programma perche' la compilazione non ha avuto successo!"
+            fi
         fi
     fi
 fi

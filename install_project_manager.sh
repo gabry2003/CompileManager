@@ -27,6 +27,14 @@ else    #Altrimenti
     tput setaf 1; echo "Installazione fallita!"   #Messaggio di errore
     exit    #Fermo lo script
 fi
+echo "Installazione di g++-multilib (necessario a compilare per Windows) in corso..."
+#Installo MinGW
+if sudo apt-get install g++-multilib;then
+    echo "Installazione di g++-multilib effettuata con successo!"
+else    #Altrimenti
+    tput setaf 1; echo "Installazione fallita!"   #Messaggio di errore
+    exit    #Fermo lo script
+fi
 echo "Installazione di aptitude (necessario ad installare Wine) in corso..."
 #Installo Aptitude
 if sudo apt install aptitude;then
