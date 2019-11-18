@@ -8,6 +8,13 @@ bold=$(tput bold)   #Testo in grassetto
 normal=$(tput sgr0) #Testo normale
 cartella_progetto=$1    #Prendo la cartella del progetto
 eseguire=$2 #Prendo in input se eseguire alla fine o no
+#Per prima cosa controllo se esiste il file del progetto
+if ! test -f "$cartella_progetto/info"; then
+    echo "${bold}Progetto non esistente! Crealo...${normal}"
+    if ! /usr/bin/./new_project.AppImage $cartella_progetto; then
+        tput setaf 1; echo "Impossibile creare il progetto!"
+    fi
+fi
 #Architettura processore
 architettura=$(uname -i)
 #Prendo il tipo di UI (grafica o console, per ora solo console)
