@@ -31,6 +31,11 @@ tipo_grafica=$(head -2 $cartella_progetto/info | tail -1)
 nome_progetto=$(head -5 $cartella_progetto/info | tail -1)
 #Prendo la descrizione del progetto
 descrizione_progetto=$(head -6 $cartella_progetto/info | tail -1)
+#Numero di compilazioni fallite
+if ! test -f $cartella_progetto/.comperror; then
+    touch $cartella_progetto/.comperror
+fi
+comp_fallite=$(head -1 $cartella_progetto/.comperror | tail -1)
 #Se le cartelle non esistono e le posso creare le creo, altrimenti fermo lo script
 if [ $distribuzione == "1" ] || [ $distribuzione == "2" ]; then #Se rispetta le condizioni
     if [ "$architettura" == "x86_64" ]; then    #Se il computer e' a 64 bit
@@ -126,10 +131,10 @@ for FILE in $cartella_progetto/*.$estensione_file; do
 done
 #Cartella corrente, per il nome del file eseguibile
 current_dir=$(basename $cartella_progetto)
-compilazione_linux_64="0"
-compilazione_windows_32="0"
-compilazione_linux_64="0"
-compilazione_windows_32="0"
+compilazione_linux_64="1"
+compilazione_windows_32="1"
+compilazione_linux_64="1"
+compilazione_windows_32="1"
 #Se il progetto e' a riga di comando
 if [ "$tipo_grafica" == "console" ]; then
     if [ "$distribuzione" == "1" ] || [ "$distribuzione" == "2" ]; then  #Compilo per Linux solo se lo prevede il progetto
@@ -149,6 +154,8 @@ if [ "$tipo_grafica" == "console" ]; then
                     if g++ -g -O2 $cartella_progetto/*.o -o $cartella_progetto/release/linux/64bit/$current_dir -fexceptions -Wall;then
                         echo "${bold}Compilazione effettuata! File eseguibile su release/linux/64bit/"$current_dir
                         compilazione_linux_64="1"
+                    else
+                        compilazione_linux_64="0"
                     fi
                     rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
@@ -164,6 +171,8 @@ if [ "$tipo_grafica" == "console" ]; then
                     if gcc -g -O2 $cartella_progetto/*.o -o $cartella_progetto/release/linux/64bit/$current_dir -fexceptions -Wall;then
                         echo "${bold}Compilazione effettuata! File eseguibile su release/linux/64bit/"$current_dir
                         compilazione_linux_64="1"
+                    else
+                        compilazione_linux_64="0"
                     fi
                     rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
@@ -182,6 +191,8 @@ if [ "$tipo_grafica" == "console" ]; then
                 if g++ -m32 -O2 -g $cartella_progetto/*.o -o $cartella_progetto/release/linux/32bit/$current_dir -fexceptions -Wall;then
                     echo "${bold}Compilazione effettuata! File eseguibile su release/linux/32bit/"$current_dir
                     compilazione_linux_32="1"
+                else
+                    compilazione_linux_32="0"
                 fi
                 rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
@@ -197,6 +208,8 @@ if [ "$tipo_grafica" == "console" ]; then
                 if gcc -m32 -O2 -g $cartella_progetto/*.o -o $cartella_progetto/release/linux/32bit/$current_dir -fexceptions -Wall;then
                     echo "${bold}Compilazione effettuata! File eseguibile su release/linux/32bit/"$current_dir
                     compilazione_linux_32="1"
+                else
+                    compilazione_linux_32="0"
                 fi
                 rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
@@ -219,6 +232,8 @@ if [ "$tipo_grafica" == "console" ]; then
                     if x86_64-w64-mingw32-g++ -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/64bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
                         echo "${bold}Compilazione effettuata! File eseguibile su release/windows/64bit/"$current_dir".exe"
                         compilazione_windows_64="1"
+                    else
+                        compilazione_windows_64="0"
                     fi
                     rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
@@ -234,6 +249,8 @@ if [ "$tipo_grafica" == "console" ]; then
                     if x86_64-w64-mingw32-gcc -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/64bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
                         echo "${bold}Compilazione effettuata! File eseguibile su release/windows/64bit/"$current_dir".exe"
                         compilazione_windows_64="1"
+                    else
+                        compilazione_windows_64="0"
                     fi
                     rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
                 fi
@@ -252,6 +269,8 @@ if [ "$tipo_grafica" == "console" ]; then
                 if i686-w64-mingw32-g++ -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/32bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
                     echo "${bold}Compilazione effettuata! File eseguibile su release/windows/32bit/"$current_dir".exe"
                     compilazione_windows_32="1"
+                else
+                    compilazione_windows_32="1"
                 fi
                 rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
@@ -267,6 +286,8 @@ if [ "$tipo_grafica" == "console" ]; then
                 if i686-w64-mingw32-gcc -g -O2 $cartella_progetto/*.o -o "$cartella_progetto/release/windows/32bit/$current_dir.exe" -fexceptions -Wall -static-libgcc -static-libstdc++;then
                     echo "${bold}Compilazione effettuata! File eseguibile su release/windows/32bit/"$current_dir".exe"
                     compilazione_windows_32="1"
+                else
+                    compilazione_windows_32="0"
                 fi
                 rm -rf $cartella_progetto/*.o   #Elimino tutti i file .o
             fi
@@ -282,13 +303,30 @@ else    #Altrimenti
         if mv $nome_progetto release/linux/64bit/$nome_progetto; then
             echo "${bold}Progetto compilato con successo. File eseguibile su $cartella_progetto/release/linux/64bit/$nome_progetto"
             compilazione_linux_64="1"
+            compilazione_linux_32="0"
+            compilazione_windows_64="0"
+            compilazione_windows_32="0"
         else
+            compilazione_linux_64="0"
+            compilazione_linux_32="0"
+            compilazione_windows_64="0"
+            compilazione_windows_32="0"
             tput setaf 1; echo "Impossibile compilare il progetto!"
         fi
     else
         tput setaf 1; echo "Impossibile compilare il progetto!"
+        
     fi
     make clean
+fi
+if [ "$compilazione_linux_64" == "1" ] && [ "$compilazione_linux_32" == "1" ] && [ "$compilazione_windows_64" == "1" ] && [ "$compilazione_windows_32" == "1" ]; then
+    comp_fallite=0
+else
+    comp_fallite=$(($comp_fallite + 1))
+fi
+echo $comp_fallite > $cartella_progetto/.comperror    #Aggiorno il numero di compilazioni fallite
+if ! test $comp_fallite -lt 2; then
+    echo "${bold}E' la $comp_fallite° volta di fila che la compilazione non ha successo, hai bisogno di una mano? AHAHAHAHAHAHAH"
 fi
 echo "${normal}"
 #Se ha scelto di eseguire il programma
@@ -305,7 +343,7 @@ if [ "$eseguire" == "1" ]; then
                     clear
                 fi
                 #Se il programma non si puo' eseguire
-                if ! wine $cartella_progetto/release/windows/64bit/*.exe;then
+                if ! xterm -hold -e wine $cartella_progetto/release/windows/64bit/*.exe;then
                     echo -------------------------------
                     tput setaf 1; echo Impossibile aprire il programma
                     echo -------------------------------
@@ -320,7 +358,7 @@ if [ "$eseguire" == "1" ]; then
                     clear
                 fi
                 #Se il programma si puo' eseguire
-                if ! wine $cartella_progetto/release/windows/32bit/*.exe;then
+                if ! xterm -hold -e wine $cartella_progetto/release/windows/32bit/*.exe;then
                     echo -------------------------------
                     tput setaf 1; echo Impossibile aprire il programma
                     echo -------------------------------
@@ -338,7 +376,7 @@ if [ "$eseguire" == "1" ]; then
                     clear
                 fi
                 #Se il programma non si puo' eseguire
-                if ! $cartella_progetto/release/linux/64bit/./*;then
+                if ! xterm -hold -e $cartella_progetto/release/linux/64bit/./*;then
                     echo -------------------------------
                     tput setaf 1; echo Impossibile aprire il programma
                     echo -------------------------------
@@ -353,7 +391,7 @@ if [ "$eseguire" == "1" ]; then
                     clear
                 fi
                 #Se il programma si puo' eseguire
-                if ! $cartella_progetto/release/linux/32bit/./*;then
+                if ! xterm -hold -e $cartella_progetto/release/linux/32bit/./*;then
                     echo -------------------------------
                     tput setaf 1; echo Impossibile aprire il programma
                     echo -------------------------------
