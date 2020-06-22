@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>315</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>315</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>800</width>
+    <height>315</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>CompileManager</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../icon.png</normaloff>../icon.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="labelProgettoAperto">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>121</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Nome del progetto aperto</string>
+    </property>
+    <property name="text">
+     <string>Progetto aperto:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelAutore">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>121</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Autore del progetto aperto</string>
+    </property>
+    <property name="text">
+     <string>Autore progetto:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelDescrizione">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>100</y>
+      <width>151</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Descrizione del progetto aperto</string>
+    </property>
+    <property name="text">
+     <string>Descrizione progetto:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelInterfaccia">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>151</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Tipo di interfaccia del progetto aperto (console o ad interfaccia grafica)</string>
+    </property>
+    <property name="text">
+     <string>Tipo interfaccia:</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inputNomeProgetto">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>20</y>
+      <width>201</width>
+      <height>27</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inputAutoreProgetto">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>60</y>
+      <width>201</width>
+      <height>27</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="inputDescrizioneProgetto">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>100</y>
+      <width>201</width>
+      <height>27</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkbox32Bit">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>20</y>
+      <width>201</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Disponibile per 32 bit</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkboxWindows">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>60</y>
+      <width>201</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Disponibile per Windows</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkboxLinux">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>100</y>
+      <width>201</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Disponibile per Linux</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteEseguiLinux64">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>200</y>
+      <width>161</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Esegui Linux a 64 bit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteEseguiLinux32">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>200</y>
+      <width>161</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Esegui Linux a 32 bit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteEseguiWindows64">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>200</y>
+      <width>191</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Esegui Windows a 64 bit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteEseguiWindows32">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>200</y>
+      <width>191</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Esegui Windows a 32 bit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteCompila">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>240</y>
+      <width>91</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Compila</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteCompilaEdEsegui">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>240</y>
+      <width>161</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Compila ed esegui</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteCreaAppImage">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>240</y>
+      <width>121</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Crea AppImage</string>
+    </property>
+    <property name="default">
+     <bool>false</bool>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pulsanteAppImageEdEsegui">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>240</y>
+      <width>191</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Crea AppImage ed esegui</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>140</y>
+      <width>161</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Applica modifiche ⏎</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="inputTipoInterfaccia">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>140</y>
+      <width>201</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>console</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>gui</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="pathProgetto">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>10</y>
+      <width>0</width>
+      <height>0</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionApri_progetto"/>
+    <addaction name="actionChiudi_progetto"/>
+    <addaction name="actionCompila_file"/>
+    <addaction name="actionCompial_ed_esegui_file"/>
+    <addaction name="actionEsci"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionCos"/>
+    <addaction name="actionCome_funziona"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionEsci">
+   <property name="text">
+    <string>Esci</string>
+   </property>
+  </action>
+  <action name="actionApri_progetto">
+   <property name="text">
+    <string>Apri progetto</string>
+   </property>
+  </action>
+  <action name="actionChiudi_progetto">
+   <property name="text">
+    <string>Chiudi progetto</string>
+   </property>
+  </action>
+  <action name="actionCompila_file">
+   <property name="text">
+    <string>Compila file</string>
+   </property>
+  </action>
+  <action name="actionCos">
+   <property name="text">
+    <string>Cos'è?</string>
+   </property>
+  </action>
+  <action name="actionCome_funziona">
+   <property name="text">
+    <string>Come funziona?</string>
+   </property>
+  </action>
+  <action name="actionCompial_ed_esegui_file">
+   <property name="text">
+    <string>Compila ed esegui file</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

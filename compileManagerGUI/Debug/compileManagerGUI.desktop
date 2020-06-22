@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=compileManagerGUI
+Exec=/home/gabri/compileManager/compileManagerGUI/release/linux/64bit/compileManagerGUI
+Icon=compileManagerGUI
+Comment=GUI di CompileManager
+Categories=Office;
+X-AppImage-Version=
