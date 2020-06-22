@@ -1,0 +1,7 @@
+Nome progetto
+Autore progetto
+Descrizione progetto
+Tipo UI (gui/console)
+Disponibile per 32 bit (1 se lo e' oppure 0 se non lo e')
+Disponibile per linux (1 se lo e' oppure 0 se non lo e')
+Disponibile per windows (1 se lo e' oppure 0 se non lo e')

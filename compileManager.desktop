@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=CompileManager
+Comment=Programma che facilita la compilazione del codice sorgente
+Path=/usr/bin
+Exec=compileManager
+Icon=/opt/compileManager/icon.png
+Terminal=false
+Categories=Utility;Development;
