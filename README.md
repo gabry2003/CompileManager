@@ -5,11 +5,8 @@
 Al momento supporta i seguenti linguaggi:
 
 - **C**
-
 - **C++**
-
 - **Python**
-
 - **Kotlin**
 
 Inoltre, permette, in pochi click, di creare un appImage del tuo progetto QT in modo tale da poterlo distribuire senza problemi.
@@ -17,18 +14,16 @@ Inoltre, permette, in pochi click, di creare un appImage del tuo progetto QT in 
 È disponibile per:
 
 - **Debian e derivate**
-
 - **CentOS, Fedora e RedHat**
-
 - **Arch e derivate**
 
 ## Funzionamento
 
 Se vuoi compilare solamente un file, puoi selezionarlo e fare partire il processo, altrimenti, se vuoi fare qualcosa di più ordinato o il progetto ha più file, puoi selezionare l'intera cartella e il programma farà tutto da solo.
 
-Verrà creato un file chiamato infoPrj contente le informazioni del progetto ()che puoi sempre modificare in un secondo momento) e ad ogni compilazione verrà modificato il file .compileError che segna quante volte di fila è fallito il processo di compilazione.
+Verrà creato un file chiamato infoPrj contente le informazioni del progetto (che puoi sempre modificare in un secondo momento) e ad ogni compilazione verrà modificato il file .compileError che segna quante volte di fila è fallito il processo di compilazione.
 
-Gli eseguibili saranno inseriti all'interno della cartella release divisi per sistema operativo ed architettura.
+Gli eseguibili saranno inseriti all'interno della cartella **release** divisi per sistema operativo ed architettura.
 
 Es. release/linux/64bit/
 
@@ -58,7 +53,7 @@ chmod a+x uninstall.sh
 
 ### File infoPrj
 
-È strutturato in questo modo
+È strutturato in questo modo:
 
 ```textile
 Nome progetto
