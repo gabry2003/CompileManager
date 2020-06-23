@@ -39,6 +39,8 @@ git clone https://github.com/gabry2003/compileManager.git
 cd compileManager
 chmod a+x install.sh
 sudo ./install.sh
+## Su Ubuntu usare:
+## sudo bash install.sh
 ```
 
 ## Disinstallazione
