@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Project      : Compile Manager
 ## Description  : Un programma che facilita la compilazione del codice sorgente in diversi linguaggi senza l'utilizzo di alcun IDE
@@ -34,6 +34,22 @@ avviaProgramma () { # Funzione per avviare un programma in una nuova finestra di
     xterm -hold -e "$percorso"
 
 }
+
+# Trovo il package manager del sistema operativo
+package_manager=""
+declare -A osInfo;
+osInfo[/etc/debian_version]="apt"
+osInfo[/etc/centos-release]="yum"
+osInfo[/etc/fedora-release]="yum"
+osInfo[/etc/redhat-release]="yum"
+osInfo[/etc/arch-release]="pacman"
+
+for f in ${!osInfo[@]}
+do
+    if [[ -f $f ]]; then
+        package_manager=${osInfo[$f]}
+    fi
+done
 
 compilazione_linux_64="1"
 compilazione_linux_32="1"
@@ -589,7 +605,13 @@ if test -d "$cartella_progetto"; then   # Se e' una cartella
         make clean
         shw_info "Compilo per Linux..."
 
-        if qmake-qt5 && make; then   # Se compila il progetto
+        if [ "$package_manager" == "apt" ]; then
+            comando = "qmake -qt5"
+        else
+            comando = "qmake-qt5"
+        fi
+
+        if $($comando) && make; then   # Se compila il progetto
 
             if [ "$architettura" == "x86_64" ]; then
 

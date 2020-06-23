@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Project      : Compile Manager
 ## Description  : Un programma che facilita la compilazione del codice sorgente in diversi linguaggi senza l'utilizzo di alcun IDE
