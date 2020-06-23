@@ -384,7 +384,7 @@ else
 fi
 
 # Inserisco all'interno della cartella i file necessari
-if chmod +x *.sh && sudo cp compile.sh /opt/compileManager/ && sudo cp createAppImage.sh /opt/compileManager/ && sudo cp logo.txt /opt/compileManager/ && sudo cp icon.png /opt/compileManager/ && sudo cp compileManager.AppImage /opt/compileManager/bin/ && sudo cp compileManager.desktop /opt/compileManager/bin/; then
+if chmod +x *.sh && sudo cp compile.sh /opt/compileManager/ && sudo cp createAppImage.sh /opt/compileManager/ && sudo cp logo.txt /opt/compileManager/ && sudo cp icon.png /opt/compileManager/ && sudo chmod a+x compileManager.AppImage && sudo cp compileManager.AppImage /opt/compileManager/bin/ && sudo cp compileManager.desktop /opt/compileManager/bin/; then
 	shw_green "File inseriti correttamente all'interno della cartella!"
 else
 	shw_err "Impossibile inserire i file all'interno della cartella!"
