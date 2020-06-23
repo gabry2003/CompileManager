@@ -21,7 +21,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+protected:
+      void showEvent(QShowEvent *ev);
+
+private:
+      void showEventHelper();
+
 private slots:
+
     void on_actionEsci_triggered();
 
     void on_actionApri_progetto_triggered();

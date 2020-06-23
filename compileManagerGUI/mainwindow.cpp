@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+QString pathPassata;
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -23,10 +25,18 @@ void MainWindow::on_actionEsci_triggered()
 void MainWindow::on_actionApri_progetto_triggered()
 {
     // Pulsante "Apri progetto"
-    QString username = qgetenv("USER");
-    if (username.isEmpty()) username = qgetenv("USERNAME");
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Seleziona cartella progetto"), "/home/" + username + "/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    if (dir == "") return;
+    QString dir;
+    if (pathPassata != "") {
+        dir = pathPassata;
+        pathPassata = "";
+    }else {
+
+        QString username = qgetenv("USER");
+        if (username.isEmpty()) username = qgetenv("USERNAME");
+        dir = QFileDialog::getExistingDirectory(this, tr("Seleziona cartella progetto"), "/home/" + username + "/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+        if (dir == "") return;  // Se non ha selezionato una cartella annullo
+
+    }
 
     // Se il file del progetto non esiste lo creo
     std::ifstream tmp(dir.toStdString() + "/infoPrj");
@@ -318,10 +328,16 @@ void MainWindow::on_actionChiudi_progetto_triggered()
 void MainWindow::on_actionCompila_file_triggered()
 {
     // Pulsante "Compila file"
+    QString username = qgetenv("USER");
+    if (username.isEmpty()) username = qgetenv("USERNAME");
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Seleziona file"), "/home/", tr("(*.cpp *.cc *.cxx *.c *.py *.kt)"));
-    std::string command = "xterm -hold -e \"sh /opt/compileManager/compile.sh " + fileName.toStdString() + " 0\"";
-    system(command.c_str());
+        tr("Seleziona file"), "/home/" + username, tr("(*.cpp *.cc *.cxx *.c *.py *.kt)"));
+    if (fileName != "") {   // Se ha selezionato un file
+
+        std::string command = "xterm -hold -e \"sh /opt/compileManager/compile.sh " + fileName.toStdString() + " 0\"";
+        system(command.c_str());
+
+    }
 }
 
 void MainWindow::on_actionCos_triggered()
@@ -339,8 +355,49 @@ void MainWindow::on_actionCome_funziona_triggered()
 void MainWindow::on_actionCompial_ed_esegui_file_triggered()
 {
     // Pulsante "Compila ed esegui file"
-    QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Seleziona file"), "/home/", tr("(*.cpp *.cc *.cxx *.c *.py *.kt)"));
+    QString fileName;
+    if (pathPassata != "") {
+        fileName = pathPassata;
+        pathPassata = "";
+    }else {
+
+        QString username = qgetenv("USER");
+        if (username.isEmpty()) username = qgetenv("USERNAME");
+        QString fileName = QFileDialog::getOpenFileName(this,
+            tr("Seleziona file"), "/home/" + username + "/", tr("(*.cpp *.cc *.cxx *.c *.py *.kt)"));
+
+    }
+
+    if (fileName == "") return;
     std::string command = "xterm -hold -e 'sh /opt/compileManager/compile.sh \"" + fileName.toStdString() + "\" 1'";
     system(command.c_str());
+}
+
+void MainWindow::showEvent(QShowEvent *ev)
+{
+    QMainWindow::showEvent(ev);
+    showEventHelper();
+}
+
+void MainWindow::showEventHelper()
+{
+    if (QCoreApplication::arguments().count() > 1) {
+        pathPassata = QCoreApplication::arguments().at(1);
+        qDebug() << pathPassata;
+        if (!pathPassata.isEmpty()) {
+
+            if (QDir(pathPassata).exists()) {  // Se e' una cartella
+
+                // Apro il progetto
+                this->on_actionApri_progetto_triggered();
+
+            }else { // Se e' un file
+
+                // Lo compilo e lo eseguo
+                this->on_actionCompial_ed_esegui_file_triggered();
+
+            }
+
+        }
+    }
 }
