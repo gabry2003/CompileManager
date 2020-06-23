@@ -82,7 +82,7 @@ echo
 
 saltaDipendenze=$1
 
-if [ "$saltaDipendenze" == "0" ]; then
+if [ "$saltaDipendenze" != "1" ]; then
 	echo "Dipendenze da installare:"
 	shw_info "- build-essential (per avere a disposizione tutti gli strumenti di sviluppatore)"
 
