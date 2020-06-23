@@ -389,6 +389,9 @@ fi
 # /usr/share/applications/compileManager.desktop -> /opt/compileManager/bin/compileManager.desktop
 # /usr/bin/compileManager -> /opt/compileManager/bin/compileManager.AppImage
 
+sudo rm /usr/share/applications/compileManager.desktop
+sudo rm /usr/bin/compileManager
+
 if sudo ln -s /opt/compileManager/bin/compileManager.desktop /usr/share/applications/compileManager.desktop && sudo ln -s /opt/compileManager/bin/compileManager.AppImage /usr/bin/compileManager; then
 	shw_green "Collegamenti simbolici creati con successo!"
 else
