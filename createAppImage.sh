@@ -39,6 +39,7 @@ cartella_progetto=$1    # Prendo la cartella del progetto
 eseguire=$2 # Prendo in input se eseguire alla fine o no
 
 if [ "$cartella_progetto" == "help" ]; then
+
     shw_info "Guida:"
     shw_info "./createAppImage.sh [cartellaProgetto] [eseguire]"
     shw_info "dove"
@@ -46,6 +47,7 @@ if [ "$cartella_progetto" == "help" ]; then
     shw_info "[eseguire] puo' essere 0/1, dove 1 indica che viene eseguito alla fine e 0 il contrario"
     echo
     exit
+    
 fi
 
 echo
@@ -92,34 +94,44 @@ if [ "$tipo_grafica" == "gui" ]; then   # Se e' un progetto con interfaccia graf
     # Controllo se c'e' un'icona nella cartella del progetto
 
     if test -f $cartella_progetto/$nome_progetto.png; then # Se c'e' l'icona
+
         # La copio all'interno nella cartella di rilascio
         if [ "$architettura" == "x86_64" ]; then    # Se il computer e' a 64 bit
             cp $cartella_progetto/$nome_progetto.png $cartella_progetto/release/linux/64bit/$nome_progetto.png
         else    # Altrimenti
             cp $cartella_progetto/$nome_progetto.png $cartella_progetto/release/linux/32bit/$nome_progetto.png
         fi
+
     fi
 
     # Creo l'AppImage
     if [ "$architettura" == "x86_64" ]; then    # Se il computer e' a 64 bit
+
         # Se non c'e' un icona nella cartella del progetto ne scarico una di default
         if ! test -f $cartella_progetto/release/linux/64bit/$nome_progetto.png; then   # Se non c'e' gia' l'icona
             cd $cartella_progetto/release/linux/64bit/
             wget https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Application-default-icon.svg/240px-Application-default-icon.svg.png  # Scarico l'icona
             mv $cartella_progetto/release/linux/64bit/240px-Application-default-icon.svg.png $cartella_progetto/release/linux/64bit/$nome_progetto.png    # La rinomino
         fi
+
         if /usr/bin/./appimagetool.AppImage $cartella_progetto/release/linux/64bit; then # Se creo l'AppImage
+
             mv $cartella_progetto/*.AppImage $cartella_progetto/release/linux/64bit/$nome_progetto.AppImage # La rinomino
             shw_green "AppImage creato con successo!"
             shw_info "E' disponibile su \"$cartella_progetto/release/linux/64bit/$nome_progetto.AppImage\"${normal}"
             # Elimino tutti i file tranne il .AppImage
             for file in $( ls $cartella_progetto/release/linux/64bit/ ); do # Controllo ogni file e cartella della cartella di rilascio
+
                 if [ $file != $nome_progetto.AppImage ]; then   # Se il file o cartella non e' il .AppImage
                     rm -rf $file    # Lo elimino
                 fi
+
             done
-            echo "Apertura in corso..."
+            
             if [ "$eseguire" == "1" ]; then # Se l'utente ha scelto di eseguire alla fine
+
+                shw_info "Apertura in corso..."
+
                 if ! $cartella_progetto/release/linux/64bit/./$nome_progetto.AppImage; then    # Se non posso eseguire l'AppImage
 
                     shw_err "Impossibile eseguire il file .AppImage!"
@@ -153,17 +165,23 @@ if [ "$tipo_grafica" == "gui" ]; then   # Se e' un progetto con interfaccia graf
 
             # Elimino tutti i file tranne il .AppImage
             for file in $( ls $cartella_progetto/release/linux/32bit/ ); do # Controllo ogni file e cartella della cartella di rilascio
+
                 if [ $file != $nome_progetto.AppImage ]; then   # Se il file o cartella non e' il .AppImage
                     rm -rf $file    # Lo elimino
                 fi
+
             done
 
-            echo "Apertura in corso..."
+            
             if [ "$eseguire" == "1" ]; then # Se l'utente ha scelto di eseguire alla fine
 
+                shw_info "Apertura in corso..."
+
                 if ! $cartella_progetto/release/linux/32bit/./$nome_progetto.AppImage; then    # Se non posso eseguire l'AppImage
+
                     shw_err "Impossibile eseguire il file .AppImage!"
                     exit    # Fermo lo script
+
                 fi
 
             fi
