@@ -53,11 +53,12 @@ osInfo[/etc/fedora-release]="yum"
 osInfo[/etc/redhat-release]="yum"
 osInfo[/etc/arch-release]="pacman"
 
-for f in ${!osInfo[@]}
-do
+for f in ${!osInfo[@]}; do
+
     if [[ -f $f ]]; then
         package_manager=${osInfo[$f]}
     fi
+
 done
 
 shw_title
@@ -127,6 +128,14 @@ if [ "$saltaDipendenze" != "1" ]; then
 			sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
 			sudo apt-get install -y multiarch-support
 			sudo apt-get install -y libc6-dev-i386
+		fi
+
+		# Installo Qmake
+		echo "Installazione di Qmake in corso..."
+		if sudo apt-get install -y qt5-qmake; then
+			shw_green "Qmake installato con successo!"
+		else
+			shw_warn "Installazione fallita, impossibile compilare progetti QT"
 		fi
 
 		# Installo MinGW
@@ -206,6 +215,14 @@ if [ "$saltaDipendenze" != "1" ]; then
 			echo "Installazione librerie per eseguire programmi a 32 bit in corso ..."
 			sudo yum install -y glibc.i686
 			sudo yum install -y glibc-devel.i686
+		fi
+
+		# Installo Qmake
+		echo "Installazione di Qmake in corso..."
+		if sudo dnf install -y qt5-devel; then
+			shw_green "Qmake installato con successo!"
+		else
+			shw_warn "Installazione fallita, impossibile compilare progetti QT"
 		fi
 
 		# Installo MinGW
@@ -383,8 +400,14 @@ else
 	fi
 fi
 
+# Creo l'AppImage
+chmod +x *.sh
+chmod a+x compileManagerGUI/./toAppImage.sh
+./createAppImage.sh "$(pwd)/compileManagerGUI/" "0"
+mv compileManagerGUI/release/linux/64bit/compileManagerGUI.AppImage compileManager.AppImage
+
 # Inserisco all'interno della cartella i file necessari
-if chmod +x *.sh && sudo cp compile.sh /opt/compileManager/ && sudo cp createAppImage.sh /opt/compileManager/ && sudo cp logo.txt /opt/compileManager/ && sudo cp icon.png /opt/compileManager/ && sudo chmod a+x compileManager.AppImage && sudo cp compileManager.AppImage /opt/compileManager/bin/ && sudo cp compileManager.desktop /opt/compileManager/bin/; then
+if  sudo cp compile.sh /opt/compileManager/ && sudo cp createAppImage.sh /opt/compileManager/ && sudo cp logo.txt /opt/compileManager/ && sudo cp icon.png /opt/compileManager/ && sudo chmod a+x compileManager.AppImage && sudo cp compileManager.AppImage /opt/compileManager/bin/ && sudo cp compileManager.desktop /opt/compileManager/bin/; then
 	shw_green "File inseriti correttamente all'interno della cartella!"
 else
 	shw_err "Impossibile inserire i file all'interno della cartella!"

@@ -606,7 +606,7 @@ if test -d "$cartella_progetto"; then   # Se e' una cartella
         shw_info "Compilo per Linux..."
 
         if [ "$package_manager" == "apt" ]; then
-            comando = "qmake -qt5"
+            comando = "qt5-qmake"
         else
             comando = "qmake-qt5"
         fi
