@@ -82,7 +82,7 @@ if [ "$tipo_grafica" == "gui" ]; then   # Se e' un progetto con interfaccia graf
     sh /opt/compileManager/compile.sh "$cartella_progetto" "0" "1" # Lo compilo
 
     # Utilizzo linuxdeployqt
-    if linuxdeployqt $nome_progetto.desktop -unsupported-allow-new-glibc -verbose=1 -no-translations -no-copy-copyright-files -extra-plugins=iconengines,platformthemes/libqgtk3.so; then
+    if linuxdeployqt "$cartella_progetto"/$nome_progetto.desktop -unsupported-allow-new-glibc -verbose=1 -no-translations -no-copy-copyright-files -extra-plugins=iconengines,platformthemes/libqgtk3.so; then
         shw_green "File per creare l'AppImage generati con successo!"
     else
         shw_warn "Impossibile creare i file per l'AppImage!"
@@ -114,7 +114,7 @@ if [ "$tipo_grafica" == "gui" ]; then   # Se e' un progetto con interfaccia graf
             mv $cartella_progetto/release/linux/64bit/240px-Application-default-icon.svg.png $cartella_progetto/release/linux/64bit/$nome_progetto.png    # La rinomino
         fi
 
-        if /usr/bin/./appimagetool.AppImage $cartella_progetto/release/linux/64bit; then # Se creo l'AppImage
+        if ARCH=x86_64 /usr/bin/./appimagetool.AppImage $cartella_progetto/release/linux/64bit; then # Se creo l'AppImage
 
             mv $cartella_progetto/*.AppImage $cartella_progetto/release/linux/64bit/$nome_progetto.AppImage # La rinomino
             shw_green "AppImage creato con successo!"
