@@ -191,6 +191,14 @@ if [ "$saltaDipendenze" != "1" ]; then
 			shw_warn "Installazione fallita, impossibile compilare ed eseguire Kotlin!"	# Messaggio di errore
 		fi
 
+		# Installo Python3
+		echo "Installazione di Python3 in corso..."
+		if sudo apt install -y python3; then
+			shw_green "Installazione di Python3 effettuata con successo!"
+		else
+			shw_warn "Installazione fallita, impossibile compilare ed eseguire per python!"	# Messaggio di errore
+		fi
+
 		# Installo xTerm
 		echo "Installazione di xTerm in corso..."
 		if sudo apt install -y xterm; then
@@ -270,6 +278,14 @@ if [ "$saltaDipendenze" != "1" ]; then
 			shw_warn "Installazione fallita, impossibile compilare ed eseguire Kotlin!"	# Messaggio di errore
 		fi
 
+		# Installo Python3
+		echo "Installazione di Python3 in corso..."
+		if sudo dnf install -y python3; then
+			shw_green "Installazione di Python3 effettuata con successo!"
+		else
+			shw_warn "Installazione fallita, impossibile compilare ed eseguire per python!"	# Messaggio di errore
+		fi
+
 		# Installo xTerm
 		echo "Installazione di xTerm in corso..."
 		if sudo yum -y install xterm; then
@@ -331,6 +347,14 @@ if [ "$saltaDipendenze" != "1" ]; then
 		sudo pacman -S snapd
 		sudo systemctl enable --now snapd.socket
 
+		# Installo Python3
+		echo "Installazione di Python3 in corso..."
+		if sudo pacman -S python-'package'; then
+			shw_green "Installazione di Python3 effettuata con successo!"
+		else
+			shw_warn "Installazione fallita, impossibile compilare ed eseguire per python!"	# Messaggio di errore
+		fi
+
 		# Installo xTerm
 		echo "Installazione di xTerm in corso..."
 		if sudo pacman -S xterm; then
@@ -378,8 +402,7 @@ if [ "$saltaDipendenze" != "1" ]; then
 
 	fi
 
-
-	if pip install pyinstaller --user; then
+	if pip3 install pyinstaller --user; then
 		shw_green "Pyinstaller installato con successo!"
 	else
 		shw_warn "Impossibile installare pyinstaller!"
