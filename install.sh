@@ -452,13 +452,3 @@ else
 fi
 
 shw_green "CompileManager installato con successo!"
-
-echo
-echo "Vuoi eseguirlo? (s|n)"
-read eseguire
-
-if [ "$eseguire" == "s" ] || [ "$eseguire" == "S" ]; then
-	compileManager
-else
-	exit
-fi
