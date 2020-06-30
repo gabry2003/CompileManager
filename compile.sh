@@ -526,6 +526,9 @@ architettura=$(uname -i)
 echo
 shw_info "Rilevata architettura: $architettura"
 
+echo
+shw_info "Package manager: $package_manager"
+
 
 if test -d "$cartella_progetto"; then   # Se e' una cartella
 
@@ -606,9 +609,9 @@ if test -d "$cartella_progetto"; then   # Se e' una cartella
         shw_info "Compilo per Linux..."
 
         if [ "$package_manager" == "apt" ]; then
-            comando = "qt5-qmake"
+            comando="qmake -qt=5"
         else
-            comando = "qmake-qt5"
+            comando="qmake-qt5"
         fi
 
         if $($comando) && make; then   # Se compila il progetto
