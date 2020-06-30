@@ -189,7 +189,7 @@ void MainWindow::on_pulsanteCompila_clicked()
 {
     // Pulsante "Compila"
     QString path = ui->pathProgetto->text();
-    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Compila\a\"; sh /opt/compileManager/compile.sh \"" + path.toStdString() + "\" 0'; exit";
+    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Compila\a\"; bash /opt/compileManager/compile.sh \"" + path.toStdString() + "\" 0'; exit";
     system(command.c_str());
 
 }
@@ -198,7 +198,7 @@ void MainWindow::on_pulsanteCompilaEdEsegui_clicked()
 {
     // Pulsante "Compila ed esegui"
     QString path = ui->pathProgetto->text();
-    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Compila ed esegui\a\"; sh /opt/compileManager/compile.sh \"" + path.toStdString() + "\" 1'; exit";
+    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Compila ed esegui\a\"; bash /opt/compileManager/compile.sh \"" + path.toStdString() + "\" 1'; exit";
     system(command.c_str());
 
 }
@@ -207,7 +207,7 @@ void MainWindow::on_pulsanteCreaAppImage_clicked()
 {
     // Pulsante "Crea AppImage"
     QString path = ui->pathProgetto->text();
-    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Crea AppImage\a\"; sh /opt/compileManager/createAppImage.sh \"" + path.toStdString() + "\" 0'; exit";
+    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Crea AppImage\a\"; bash /opt/compileManager/createAppImage.sh \"" + path.toStdString() + "\" 0'; exit";
     system(command.c_str());
 
 }
@@ -216,7 +216,7 @@ void MainWindow::on_pulsanteAppImageEdEsegui_clicked()
 {
     // Pulsante "Crea AppImage ed esegui"
     QString path = ui->pathProgetto->text();
-    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Crea AppImage ed esegui\a\"; sh /opt/compileManager/createAppImage.sh \"" + path.toStdString() + "\" 1'; exit";
+    std::string command = "xterm -hold -e 'PROMPT_COMMAND= echo -en \"\033]0;Crea AppImage ed esegui\a\"; bash /opt/compileManager/createAppImage.sh \"" + path.toStdString() + "\" 1'; exit";
     system(command.c_str());
 }
 
@@ -334,7 +334,7 @@ void MainWindow::on_actionCompila_file_triggered()
         tr("Seleziona file"), "/home/" + username, tr("(*.cpp *.cc *.cxx *.c *.py *.kt)"));
     if (fileName != "") {   // Se ha selezionato un file
 
-        std::string command = "xterm -hold -e \"sh /opt/compileManager/compile.sh " + fileName.toStdString() + " 0\"";
+        std::string command = "xterm -hold -e \"bash /opt/compileManager/compile.sh " + fileName.toStdString() + " 0\"";
         system(command.c_str());
 
     }
@@ -369,7 +369,7 @@ void MainWindow::on_actionCompial_ed_esegui_file_triggered()
     }
 
     if (fileName == "") return;
-    std::string command = "xterm -hold -e 'sh /opt/compileManager/compile.sh \"" + fileName.toStdString() + "\" 1'";
+    std::string command = "xterm -hold -e 'bash /opt/compileManager/compile.sh \"" + fileName.toStdString() + "\" 1'";
     system(command.c_str());
 }
 
