@@ -402,7 +402,7 @@ if [ "$saltaDipendenze" != "1" ]; then
 
 	fi
 
-	if pip3 install pyinstaller --user; then
+	if sudo pip3 install pyinstaller; then
 		shw_green "Pyinstaller installato con successo!"
 	else
 		shw_warn "Impossibile installare pyinstaller!"
