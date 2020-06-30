@@ -609,12 +609,26 @@ if test -d "$cartella_progetto"; then   # Se e' una cartella
         shw_info "Compilo per Linux..."
 
         if [ "$package_manager" == "apt" ]; then
-            comando="qmake -qt=5"
+
+            if ! qmake -qt=5; then
+
+                shw_err "Impossibile compilare il progetto!"
+                exit
+
+            fi
+
         else
-            comando="qmake-qt5"
+            
+            if ! qmake-qt5; then
+
+                shw_err "Impossibile compilare il progetto!"
+                exit
+
+            fi
+            
         fi
 
-        if $($comando) && make; then   # Se compila il progetto
+        if make; then   # Se compila il progetto
 
             if [ "$architettura" == "x86_64" ]; then
 
