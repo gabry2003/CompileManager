@@ -87,6 +87,7 @@ resetCompErr () {   # Funzione per resettare il contatore delle compilazioni fal
 tipoFile () {   # Funzione per trovare il tipo di file
 
     nomeFile=$1     # Nome del file
+    nomeFile=$(basename $nomeFile)  # Metto il basename
     estensione=${nomeFile#*.}   # Estensione del file
 
     if [ "$estensione" == "c" ]; then
