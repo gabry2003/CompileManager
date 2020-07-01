@@ -108,7 +108,8 @@ compilaFile () {    # Funzione per compilare il file
 
     nomeFile=$1                 # Nome del file
     eseguire=$2                 # Se eseguire dopo la compilazione
-    baseFile=${nomeFile%%.*}    # Nome del file senza estensione
+    cervo=$(basename $nomeFile)
+    baseFile="$(dirname $nomeFile)/${cervo%%.*}"    # Nome del file senza estensione
     estensione=${nomeFile#*.}   # Estensione del file
     tipo=$(tipoFile $nomeFile)  # Linguaggio
     successo="1"                # Se ha avuto successo
